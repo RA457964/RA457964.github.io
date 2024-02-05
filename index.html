@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aru I Like!!</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #FFC0CB;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #backgroundText {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            color: #FF0000;
+            font-family: 'Cursive', sans-serif;
+            text-shadow: 2px 2px 4px #000000;
+            z-index: 1;
+        }
+
+        #jumpingImage {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            z-index: 2;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #FF0000;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 75%, 25% 100%, 0% 35%);
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="backgroundText">I like you ARUU!!</div>
+
+<img src="image.png" alt="Jumping Image" id="jumpingImage">
+
+<div id="hearts-container"></div>
+
+<audio autoplay loop>
+    <source src="your_audio_file.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+</audio>
+
+<script>
+    var jumpingImage = document.getElementById("jumpingImage");
+    var posX = 0;
+    var posY = 0;
+    var speedX = 2;
+    var speedY = 2;
+
+    function updatePosition() {
+        posX += speedX;
+        posY += speedY;
+
+        if (posX + jumpingImage.width > window.innerWidth || posX < 0) {
+            speedX = -speedX;
+        }
+        if (posY + jumpingImage.height > window.innerHeight || posY < 0) {
+            speedY = -speedY;
+        }
+
+        jumpingImage.style.left = posX + "px";
+        jumpingImage.style.top = posY + "px";
+
+        requestAnimationFrame(updatePosition);
+    }
+
+    updatePosition();
+
+    var heartsContainer = document.getElementById('hearts-container');
+
+    for (var i = 0; i < 10; i++) {
+        var heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        heartsContainer.appendChild(heart);
+    }
+
+    // Function to play audio on user interaction
+    function playAudio() {
+        var audio = document.querySelector('audio');
+        audio.play();
+        // Remove event listener to prevent multiple plays
+        document.removeEventListener('click', playAudio);
+    }
+
+    // Event listener for user interaction to play audio
+    document.addEventListener('click', playAudio);
+</script>
+
+</body>
+</html>
